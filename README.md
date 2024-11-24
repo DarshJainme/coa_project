@@ -13,8 +13,11 @@ u_{i,j} = \frac{u_{i-1,j-1} + u_{i-1,j+1} + u_{i+1,j-1} + u_{i+1,j+1} + 2(u_{i-1
 
 ## Features
 Parallelization with OpenMP: Utilizes DOACROSS dependencies to achieve efficient parallelism while preserving the correctness of computations.
+
 Performance Metrics: Measures runtime performance with varying numbers of threads and provides data for performance analysis.
+
 Scalability: Designed to handle large grid sizes efficiently using multi-threaded parallel execution.
+
 Visualizing Results: Use the Python plotting script to visualize the relationship between runtime and the number of threads:
 
 ## code
