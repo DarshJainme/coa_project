@@ -101,7 +101,8 @@ Contributions are welcome! Feel free to fork the repository, make improvements, 
 
 ## Simulations
 This section demonstrates some of the application of the laplacian 9-point stencil like heat simulation and edge detection in images .
-
+Edge Detection : First run the cpp file and then run the python file . 
+Heat Simulation : Directly run the python file .
 
 License
 This project is licensed under the MIT License. See the LICENSE file for details.
