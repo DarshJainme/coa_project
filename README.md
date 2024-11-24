@@ -11,96 +11,25 @@ The 9-point Laplacian stencil is a numerical method used to approximate the Lapl
 u_{i,j} = \frac{-u_{i-1,j-1} - u_{i-1,j+1} - u_{i+1,j-1} - u_{i+1,j+1} + 4(u_{i-1,j} + u_{i+1,j} + u_{i,j-1} + u_{i,j+1}) - 20u_{i,j}}{6h^2}
 ```
 
-Features
-Laplacian Kernel: Implements the 9-point stencil operator to compute second-order derivatives in a 2D grid.
+## Features
 Parallelization with OpenMP: Utilizes DOACROSS dependencies to achieve efficient parallelism while preserving the correctness of computations.
 Performance Metrics: Measures runtime performance with varying numbers of threads and provides data for performance analysis.
 Scalability: Designed to handle large grid sizes efficiently using multi-threaded parallel execution.
-Directory Structure
-bash
-Copy code
-├── src/
-│   ├── main.cpp       # Contains the main implementation of the Laplacian algorithm
-│   ├── utils.cpp      # Utility functions for grid initialization and performance timing
-│   └── utils.h        # Header file for utility functions
-├── data/
-│   └── results/       # Stores timing results for different thread counts
-├── plots/
-│   └── plot.py        # Python script for visualizing timing results
-├── Makefile           # Build automation script
-└── README.md          # Project documentation
-Installation and Requirements
-Dependencies:
+Visualizing Results: Use the Python plotting script to visualize the relationship between runtime and the number of threads:
 
-Compiler: GCC (with OpenMP support) or compatible.
-Python (for plotting): matplotlib, numpy.
-Setup:
+## code
+main_code.cpp : Consist of four functionalities for each techniques for parallelisation .
+First Enter dimension of the matrix (between 0 and 10,000) however for small values of n parallelisation is not needed since overhead associated with it is too high resulting in better sequential execution .
+#### Techniques used : Guided Scheduling with or without Tiling and SIMD parallelisation .
 
-Clone the repository:
+seq.cpp : Provides input for cuda file speedups_with_cuda.cu
 
-bash
-Copy code
-git clone https://github.com/your-repo/9-point-laplacian-doacross.git
-cd 9-point-laplacian-doacross
-Compile the program:
+speedups_with_cuda.cu : We used cuda to leverage GPU processing capabilities and getting a better speedup than provided by conventional techiques .
 
-bash
-Copy code
-make
-Run the program:
-
-bash
-Copy code
-./laplacian
-Usage
-Command-Line Options:
-The program accepts parameters for grid size and number of threads. For example:
-
-bash
-Copy code
-./laplacian <grid_size> <num_threads>
-Example:
-
-bash
-Copy code
-./laplacian 1000 8
-Output:
-The program outputs:
-
-Final grid state (if requested).
-Runtime for computation.
-Timing results saved to the data/results/ directory.
-Visualizing Results:
-Use the Python plotting script to visualize the relationship between runtime and the number of threads:
-
-bash
-Copy code
-python3 plots/plot.py
-How It Works
-Grid Initialization:
-A 2D grid of user-defined size is initialized with boundary values.
-
-Laplacian Calculation:
-The Laplacian stencil computes values at each grid point based on its neighbors.
-
-DOACROSS Parallelism:
-OpenMP's DOACROSS technique is used to manage dependencies across grid rows, ensuring correctness while maximizing parallel performance.
-
-Performance Evaluation:
-The program measures and outputs timing for varying numbers of threads.
-
-Performance Analysis
-Timing data is logged for analysis.
-Use the Python script to generate plots of execution time vs. thread count to evaluate scalability and parallel efficiency.
-Future Enhancements
-Implement additional boundary condition support (e.g., Neumann or Robin).
-Extend to 3D Laplacian for volumetric simulations.
-Explore other parallelism models such as MPI or hybrid MPI+OpenMP.
-Contributing
-Contributions are welcome! Feel free to fork the repository, make improvements, and submit a pull request.
+bash_file : for running main_code.cpp and user can run speedups_with_cuda.cu file directly from this .
 
 ## Analysis
-This file contains speedup and efficiency comparison between various matrix sizes implemented using several parallelism methods like Guided Scheduling , Tiling with different block sizes and SIMD.
+efficiency.ipynb : Contains speedup and efficiency comparison between various matrix sizes implemented using several parallelism methods like Guided Scheduling , Tiling with different block sizes and SIMD.
 
 #### Guided Scheduling -
 In guided scheduling, the chunk size decreases over time. Larger chunks are assigned initially, and as more iterations are completed, smaller chunks are given to threads. This approach can reduce overhead toward the end of the loop as fewer iterations are left.​
@@ -122,8 +51,5 @@ This section demonstrates some of the application of the laplacian 9-point stenc
 Edge Detection : First run the cpp file and then run the python file . 
 Heat Simulation : Directly run the python file .
 
-License
-This project is licensed under the MIT License. See the LICENSE file for details.
-
 Contact
-For questions or feedback, reach out to your-email@example.com.
+For questions or feedback, reach out to kartik_s@cs.iitr.ac.in.
