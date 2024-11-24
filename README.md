@@ -54,5 +54,8 @@ This section demonstrates some of the application of the laplacian 9-point stenc
 Edge Detection : First run the cpp file and then run the python file . 
 Heat Simulation : Directly run the python file .
 
-Contact
+## Contact
 For questions or feedback, reach out to kartik_s@cs.iitr.ac.in.
+
+## Link to our slides : 
+https://iitracin-my.sharepoint.com/:p:/g/personal/krishna_p_cs_iitr_ac_in/EY_fT2dCKQlKsmRJ-epXcd4BkDeWoJz1ntCiP5maTGoAMw?e=kDV7cm
