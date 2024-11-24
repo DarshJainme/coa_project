@@ -8,7 +8,7 @@ The 9-point Laplacian stencil is a numerical method used to approximate the Lapl
 \nabla^2 u = \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} 
 ```
 ```math
-u_{i,j} = \frac{-u_{i-1,j-1} - u_{i-1,j+1} - u_{i+1,j-1} - u_{i+1,j+1} + 4(u_{i-1,j} + u_{i+1,j} + u_{i,j-1} + u_{i,j+1}) - 20u_{i,j}}{6h^2}
+u_{i,j} = \frac{u_{i-1,j-1} + u_{i-1,j+1} + u_{i+1,j-1} + u_{i+1,j+1} + 2(u_{i-1,j} + u_{i+1,j} + u_{i,j-1} + u_{i,j+1}) - 20u_{i,j}}{6h^2}
 ```
 
 ## Features
