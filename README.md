@@ -99,6 +99,24 @@ Explore other parallelism models such as MPI or hybrid MPI+OpenMP.
 Contributing
 Contributions are welcome! Feel free to fork the repository, make improvements, and submit a pull request.
 
+## Analysis
+This file contains speedup and efficiency comparison between various matrix sizes implemented using several parallelism methods like Guided Scheduling , Tiling with different block sizes and SIMD.
+
+#### Guided Scheduling -
+In guided scheduling, the chunk size decreases over time. Larger chunks are assigned initially, and as more iterations are completed, smaller chunks are given to threads. This approach can reduce overhead toward the end of the loop as fewer iterations are left.​
+This scheduling is often beneficial when there’s high variation in the time required for different parts of the loop.​
+
+Example usage: #pragma omp for schedule(guided, chunk_size)​
+
+#### Tiling -
+Tiling divides a large matrix into smaller blocks to improve parallelism and memory access. In the Laplacian solver, it enhances cache locality by processing subgrids independently, reducing cache misses and speeding up computation. However, its effectiveness varies: it works well for large problems where memory bandwidth is a bottleneck but may be less effective for smaller problems or when there's load imbalance between threads.​
+In our project we have used various block sizes for analysing how would it affect execution time.
+
+#### SIMD -
+Allows multiple data elements to be processed simultaneously with a single instruction, improving parallelism and performance. In the Laplacian solver, SIMD can be used to perform multiple calculations (such as updating neighboring grid points) in parallel, effectively reducing the number of instructions and speeding up execution. By leveraging SIMD, the solver can utilize the full processing power of modern CPUs, especially in high-performance computing tasks, resulting in significant performance gains without altering the structure of the algorithm.​
+
+These along with some inferences are available in this ipynb file.
+
 ## Simulations
 This section demonstrates some of the application of the laplacian 9-point stencil like heat simulation and edge detection in images .
 Edge Detection : First run the cpp file and then run the python file . 
