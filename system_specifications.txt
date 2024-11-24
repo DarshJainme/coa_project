@@ -1,0 +1,19 @@
+System Information
+
+Operating System:
+Windows 11 Home Single Language 64-bit (10.0, Build 22631)
+
+Processor:
+13th Gen Intel(R) Core(TM) i5-13420H (12 CPUs), ~2.1GHz
+
+Memory:
+16384MB RAM
+
+Compiler:
+gcc.exe (Rev3, Built by MSYS2 project) 14.1.0
+
+GPU:
+NVIDIA GeForce RTX 4050 Laptop GPU
+
+Storage:
+512 GB SSD
