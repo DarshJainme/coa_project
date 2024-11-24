@@ -1,82 +1,110 @@
-9-Point Laplacian 2D Algorithm with DOACROSS Parallelism
-Project Overview
-This project provides a C program that implements a 2D 9-point Laplacian stencil using DOACROSS parallelism with OpenMP. The 9-point Laplacian stencil is used in various scientific and engineering applications, such as image processing, heat distribution simulations, and solving partial differential equations (PDEs). 
-The goal of this project is to leverage DOACROSS parallelism to improve computational performance by effectively managing dependencies across grid points in a parallel environment.
+# 9-Point Laplacian 2D Algorithm with DOACROSS Parallelism in OpenMP
+## Project Overview
+This project implements the 9-point Laplacian 2D algorithm using DOACROSS parallelism with OpenMP. The DOACROSS parallelism technique ensures efficient parallel execution while handling data dependencies across iterations.
 
-Table of Contents
-Project Overview
-Background
-Features
-Getting Started
-Usage
-Parallelism Details
-Performance
-References
-Background
-The 9-point Laplacian stencil operates on a 2D grid, updating each cell based on its neighboring values. Unlike the simpler 5-point stencil, the 9-point Laplacian also considers the diagonal neighbors, resulting in a more accurate approximation of spatial derivatives.
-
-DOACROSS parallelism in OpenMP allows for parallelization across loop iterations with specific dependencies. Here, we apply DOACROSS parallelism to efficiently calculate each grid point in parallel while respecting the dependencies required by the Laplacian stencil.
+### What is Laplacian 9-point 2D algorithm
+The 9-point Laplacian stencil is a numerical method used to approximate the Laplacian operator over a 2D grid. The Laplacian algorithm is a numerical method widely used in fields such as computational physics, image processing, and numerical simulations for solving partial differential equations (PDEs) over a two-dimensional grid. For a grid point (i,j), the formula is:
+```math
+\nabla^2 u = \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} 
+```
+```math
+u_{i,j} = \frac{-u_{i-1,j-1} - u_{i-1,j+1} - u_{i+1,j-1} - u_{i+1,j+1} + 4(u_{i-1,j} + u_{i+1,j} + u_{i,j-1} + u_{i,j+1}) - 20u_{i,j}}{6h^2}
+```
 
 Features
-9-Point Laplacian Algorithm: Implements the 9-point Laplacian stencil for 2D grids.
-DOACROSS Parallelism: Utilizes OpenMP to parallelize the calculation, with handling of dependencies across grid points.
-Configurable Grid Size and Iterations: Easily adjust grid dimensions and iteration count.
-Performance Timing: Measures and outputs execution time for performance analysis.
-Getting Started
-Prerequisites
-To compile and run this project, you will need:
+Laplacian Kernel: Implements the 9-point stencil operator to compute second-order derivatives in a 2D grid.
+Parallelization with OpenMP: Utilizes DOACROSS dependencies to achieve efficient parallelism while preserving the correctness of computations.
+Performance Metrics: Measures runtime performance with varying numbers of threads and provides data for performance analysis.
+Scalability: Designed to handle large grid sizes efficiently using multi-threaded parallel execution.
+Directory Structure
+bash
+Copy code
+├── src/
+│   ├── main.cpp       # Contains the main implementation of the Laplacian algorithm
+│   ├── utils.cpp      # Utility functions for grid initialization and performance timing
+│   └── utils.h        # Header file for utility functions
+├── data/
+│   └── results/       # Stores timing results for different thread counts
+├── plots/
+│   └── plot.py        # Python script for visualizing timing results
+├── Makefile           # Build automation script
+└── README.md          # Project documentation
+Installation and Requirements
+Dependencies:
 
-C Compiler with OpenMP support (e.g., GCC with -fopenmp flag).
-Make (optional) if using the provided Makefile.
-Installation
-Clone the Repository:
+Compiler: GCC (with OpenMP support) or compatible.
+Python (for plotting): matplotlib, numpy.
+Setup:
+
+Clone the repository:
 
 bash
 Copy code
 git clone https://github.com/your-repo/9-point-laplacian-doacross.git
 cd 9-point-laplacian-doacross
-Compile the Program:
+Compile the program:
 
-Using the Makefile:
 bash
 Copy code
 make
-Or manually:
+Run the program:
+
 bash
 Copy code
-gcc -fopenmp -o laplacian_9pt main.c
+./laplacian
 Usage
-To run the compiled program:
+Command-Line Options:
+The program accepts parameters for grid size and number of threads. For example:
 
 bash
 Copy code
-./laplacian_9pt [grid_size] [iterations] [num_threads]
-Arguments
-grid_size: Dimension of the grid (e.g., 100 for a 100x100 grid).
-iterations: Number of iterations for the Laplacian calculation.
-num_threads: Number of OpenMP threads to use.
-Example
+./laplacian <grid_size> <num_threads>
+Example:
+
 bash
 Copy code
-./laplacian_9pt 100 1000 8
-This command runs the program on a 100x100 grid for 1000 iterations with 8 threads.
+./laplacian 1000 8
+Output:
+The program outputs:
 
-Parallelism Details
-DOACROSS Parallelism
-DOACROSS parallelism in OpenMP is implemented to manage dependencies across the grid. Each grid point update depends on its neighbors, and the DOACROSS approach ensures that necessary dependencies are respected. In particular:
+Final grid state (if requested).
+Runtime for computation.
+Timing results saved to the data/results/ directory.
+Visualizing Results:
+Use the Python plotting script to visualize the relationship between runtime and the number of threads:
 
-Row-wise Dependency: Each cell depends on values from the previous iteration of both row and column neighbors.
-DOACROSS Approach: Ensures that row dependencies are handled, enabling partial overlap across rows and allowing for efficient parallelism.
-OpenMP Implementation
-In the code, #pragma omp parallel for is used to enable DOACROSS parallelism. The specific dependencies in the grid are managed within the OpenMP loop to maintain the accuracy of the 9-point stencil while maximizing performance.
+bash
+Copy code
+python3 plots/plot.py
+How It Works
+Grid Initialization:
+A 2D grid of user-defined size is initialized with boundary values.
 
-Performance
-The program measures and outputs the total execution time for the Laplacian calculations, allowing users to analyze the effects of parallelism and grid size on performance. Timing data can be exported and analyzed to evaluate speedup as the number of threads increases.
+Laplacian Calculation:
+The Laplacian stencil computes values at each grid point based on its neighbors.
 
-Analyzing Performance
-To analyze performance, experiment with different grid sizes, iteration counts, and thread numbers. Compare the time taken for each configuration to assess the efficiency and scalability of DOACROSS parallelism with the 9-point stencil.
+DOACROSS Parallelism:
+OpenMP's DOACROSS technique is used to manage dependencies across grid rows, ensuring correctness while maximizing parallel performance.
 
-References
-OpenMP Documentation: https://www.openmp.org/
-Laplacian Operator in Numerical Computing: Research on the 9-point stencil and its applications.
-Parallel Computing with OpenMP: Study materials on DOACROSS parallelism.
+Performance Evaluation:
+The program measures and outputs timing for varying numbers of threads.
+
+Performance Analysis
+Timing data is logged for analysis.
+Use the Python script to generate plots of execution time vs. thread count to evaluate scalability and parallel efficiency.
+Future Enhancements
+Implement additional boundary condition support (e.g., Neumann or Robin).
+Extend to 3D Laplacian for volumetric simulations.
+Explore other parallelism models such as MPI or hybrid MPI+OpenMP.
+Contributing
+Contributions are welcome! Feel free to fork the repository, make improvements, and submit a pull request.
+
+## Simulations
+This section demonstrates some of the application of the laplacian 9-point stencil like heat simulation and edge detection in images .
+
+
+License
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+Contact
+For questions or feedback, reach out to your-email@example.com.
